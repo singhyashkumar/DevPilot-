@@ -1,0 +1,19 @@
+DEV PILOT — START HERE
+======================
+
+Do not run this command:
+
+    streamlit run dashboard/app.py
+
+This project is NOT a Streamlit app anymore. It uses the premium FastAPI
+website that was merged with the DevPilot analyzer backend.
+
+EASIEST:
+1. Double-click START_DEV_PILOT.bat
+2. Your browser opens automatically.
+
+OR IN POWERSHELL:
+
+    py run.py
+
+The first run installs needed packages automatically.
