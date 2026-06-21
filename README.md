@@ -1,76 +1,145 @@
 # DevPilot — Repository Intelligence Dashboard
 
-DevPilot analyzes a local project folder or a public GitHub repository and produces a visual quality report: code health, documentation, testing readiness, security signals, dependency health, project structure, language breakdown, roadmap, and exports.
+[![Python](https://img.shields.io/badge/Python-3.8+-blue.svg)](https://www.python.org/)
+[![License](https://img.shields.io/badge/License-MIT-green.svg)](LICENSE)
+[![FastAPI](https://img.shields.io/badge/FastAPI-0.100+-green.svg)](https://fastapi.tiangolo.com/)
 
-This release combines the provided premium frontend theme with the DevPilot cross-language analysis engine.
+**DevPilot** is an intelligent code analysis dashboard that evaluates local projects or public GitHub repositories, delivering comprehensive visual reports on code health, documentation quality, testing readiness, security signals, dependency health, project structure, language distribution, and actionable roadmaps.
 
-## Start the website — Windows
+This release integrates a premium frontend theme with DevPilot's powerful cross-language analysis engine.
 
-### Easiest method
+---
 
-Double-click:
+## 🚀 Quick Start
 
-```text
+### Windows Users
+
+#### Option 1: One-Click Launch (Recommended)
+
+Simply double-click the launcher:
+
+```batch
 START_DEV_PILOT.bat
 ```
 
-It creates an isolated `.venv` on the first run, installs the required packages automatically, chooses a free local port, and opens the browser.
+On first run, this script will:
+- Create an isolated virtual environment (`.venv`)
+- Install all required dependencies automatically
+- Select an available local port
+- Open your default browser
 
-### Terminal method
+#### Option 2: Terminal Launch
 
-Open PowerShell in this extracted project folder and run:
+Open PowerShell in the project directory and execute:
 
 ```powershell
 py run.py
 ```
 
-The browser opens automatically. The default address is:
+The dashboard will open automatically at:
 
-```text
+```
 http://127.0.0.1:8080
 ```
 
-If port `8080` is already in use, DevPilot automatically chooses the next free port and prints the exact address in the terminal.
+> **Note:** If port `8080` is occupied, DevPilot automatically selects the next available port and displays the exact URL in the terminal.
 
-**Do not run** `streamlit run dashboard/app.py`. This project no longer uses Streamlit. It uses **FastAPI + the premium HTML/CSS/JavaScript dashboard**, which is started with `py run.py`.
+⚠️ **Important:** Do not run `streamlit run dashboard/app.py`. This project uses **FastAPI + Premium HTML/CSS/JavaScript Dashboard**, launched exclusively via `py run.py`.
 
-## Analyze a project
+---
 
-- For a local project, paste a full folder path, such as `D:\Projects\my-app`.
-- For a public repository, paste a clean GitHub URL such as `https://github.com/owner/repository`.
-- Press **Enter** or click **Analyze Repository**.
-- The dashboard shows real scan stages, percentage, elapsed time, ETA, completed report data, language matrix, issues, roadmap, and HTML/Markdown/JSON exports.
+## 📊 Analyze a Project
 
-## CLI mode
+DevPilot supports both local directories and public GitHub repositories:
+
+1. **Local Project:** Enter the full path, e.g., `D:\Projects\my-app`
+2. **GitHub Repository:** Paste a clean URL, e.g., `https://github.com/owner/repository`
+3. Click **Analyze Repository** or press **Enter**
+
+The dashboard displays:
+- ✅ Real-time scan progress (percentage, elapsed time, ETA)
+- ✅ Comprehensive report metrics
+- ✅ Language distribution matrix
+- ✅ Identified issues and recommendations
+- ✅ Development roadmap
+- ✅ Export options (HTML, Markdown, JSON)
+
+---
+
+## 💻 Command-Line Interface (CLI)
+
+Run analyses directly from the terminal:
 
 ```powershell
+# Analyze a local project with export
 py run.py "D:\Projects\my-app" --export
+
+# Analyze a GitHub repository with export
 py run.py "https://github.com/psf/requests" --export
 ```
 
-## Optional test setup
+---
+
+## 🧪 Development & Testing
+
+Install development dependencies and run tests:
 
 ```powershell
+# Install dev requirements
 py -m pip install -r requirements-dev.txt
+
+# Run test suite
 py -m pytest -q
 ```
 
-## Architecture
+---
 
-```text
+## 🏗️ Project Architecture
+
+```
 devpilot/
 ├── dashboard/
-│   ├── api.py              # FastAPI API + real background progress jobs
-│   ├── app.py              # Streamlit compatibility page only
-│   └── serializers.py      # Analyzer report → browser payload
-├── static/                 # Premium UI CSS and JavaScript
-├── templates/              # Premium UI shell
-├── src/devpilot/           # Multi-language analyzer
-├── run.py                  # One-command automatic setup + launcher
-├── START_DEV_PILOT.bat     # Double-click Windows launcher
-└── tests/
+│   ├── api.py              # FastAPI backend + real-time background jobs
+│   ├── app.py              # Streamlit compatibility layer (legacy)
+│   └── serializers.py      # Report serialization for browser payloads
+├── static/                 # Premium UI assets (CSS, JavaScript)
+├── templates/              # Premium UI HTML templates
+├── src/devpilot/           # Multi-language analysis engine
+├── run.py                  # Unified setup script + application launcher
+├── START_DEV_PILOT.bat     # Windows one-click launcher
+└── tests/                  # Test suite
 ```
 
-## Supported code analysis
+---
 
-Python receives deeper AST checks. JavaScript, TypeScript, Java, Go, C/C++, C#, Rust, PHP, Ruby, Kotlin, Swift, Dart, SQL, Shell, PowerShell, HTML, CSS, Vue, Svelte, and other detected languages receive conservative language-aware repository quality checks. DevPilot reports engineering signals; it is not a compiler, formal static-analysis product, or security certification tool.
+## 🔍 Supported Languages & Analysis
+
+DevPilot provides **deep AST-based analysis** for Python and **conservative language-aware quality checks** for:
+
+| Category | Languages |
+|----------|-----------|
+| **Web** | JavaScript, TypeScript, HTML, CSS, Vue, Svelte, PHP |
+| **Systems** | Rust, C, C++, Go |
+| **Enterprise** | Java, C#, Kotlin, Swift |
+| **Scripting** | Ruby, Shell, PowerShell |
+| **Data** | SQL, Dart |
+
+> **Disclaimer:** DevPilot reports engineering signals and code quality indicators. It is **not** a compiler, formal static-analysis tool, or security certification product.
+
+---
+
+## 📄 License
+
+This project is licensed under the MIT License — see the [LICENSE](LICENSE) file for details.
+
+---
+
+## 🤝 Contributing
+
+Contributions are welcome! Please feel free to submit a Pull Request or open an Issue for bugs, feature requests, or improvements.
+
+---
+
+<p align="center">
+  <strong>Built with ❤️ using FastAPI & Premium UI Components</strong>
+</p>
