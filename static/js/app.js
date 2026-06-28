@@ -32,11 +32,13 @@ class DevPilotApp {
         this.exportMenu = document.getElementById('export-menu');
         this.historyDrawer = document.getElementById('history-drawer');
         this.historyList = document.getElementById('history-list');
+        this.inputError = document.getElementById('input-error');
     }
 
     bindEvents() {
         this.tabBtns.forEach((button) => button.addEventListener('click', () => this.switchTab(button.dataset.tab)));
         this.analyzeBtn.addEventListener('click', () => this.startAnalysis());
+        this.repoInput.addEventListener('input', () => this.clearInputError());
         this.repoInput.addEventListener('keydown', (event) => {
             if (event.key === 'Enter') {
                 event.preventDefault();
@@ -47,6 +49,7 @@ class DevPilotApp {
             this.currentTab = 'github';
             this.switchTab('github');
             this.repoInput.value = button.dataset.url;
+            this.clearInputError();
             this.startAnalysis();
         }));
         document.getElementById('back-btn').addEventListener('click', () => this.showHero());
@@ -76,6 +79,7 @@ class DevPilotApp {
 
     switchTab(tab) {
         this.currentTab = tab;
+        this.clearInputError();
         this.tabBtns.forEach((button) => button.classList.toggle('active', button.dataset.tab === tab));
         this.repoInput.placeholder = tab === 'github'
             ? 'https://github.com/username/repository'
@@ -85,13 +89,17 @@ class DevPilotApp {
     async startAnalysis() {
         if (this.isAnalyzing) return;
         const source = this.repoInput.value.trim();
+        this.clearInputError();
         if (!source) {
             this.showError('Enter a local repository path or a public GitHub repository URL.');
             return;
         }
-        if (this.currentTab === 'github' && !this.isValidGithubUrl(source)) {
-            this.showError('Enter a clean public GitHub URL such as https://github.com/owner/repository.');
-            return;
+        if (this.currentTab === 'github') {
+            const validationError = this.githubUrlValidationMessage(source);
+            if (validationError) {
+                this.showError(validationError);
+                return;
+            }
         }
         this.isAnalyzing = true;
         this.showLoading();
@@ -118,7 +126,34 @@ class DevPilotApp {
     }
 
     isValidGithubUrl(url) {
-        return /^https?:\/\/(www\.)?github\.com\/[\w.-]+\/[\w.-]+\/?$/i.test(url);
+        return !this.githubUrlValidationMessage(url);
+    }
+
+    githubUrlValidationMessage(value) {
+        let parsed;
+        try {
+            parsed = new URL(value);
+        } catch (_) {
+            return 'Use a public GitHub URL such as https://github.com/owner/repository.';
+        }
+        const host = parsed.hostname.toLowerCase();
+        if (!['github.com', 'www.github.com'].includes(host) || !['http:', 'https:'].includes(parsed.protocol)) {
+            return 'DevPilot accepts public GitHub repositories only. Use https://github.com/owner/repository.';
+        }
+        if (parsed.search || parsed.hash) {
+            return 'Paste the repository root URL only. Remove query text and # fragments.';
+        }
+        const parts = parsed.pathname.split('/').filter(Boolean);
+        if (parts.length !== 2) {
+            return 'Paste the repository root URL only: https://github.com/owner/repository. Do not use /tree/, /blob/, /issues/, or profile links.';
+        }
+        const [owner, repository] = parts;
+        const segment = /^[A-Za-z0-9](?:[A-Za-z0-9_.-]{0,98}[A-Za-z0-9])?$/;
+        const cleanRepository = repository.replace(/\.git$/i, '');
+        if (!segment.test(owner) || !cleanRepository || !segment.test(cleanRepository)) {
+            return 'That GitHub repository address is malformed. Use https://github.com/owner/repository.';
+        }
+        return '';
     }
 
     async waitForCompletion(jobId) {
@@ -590,7 +625,24 @@ class DevPilotApp {
     }
 
     showError(message) {
+        this.showInputError(message);
         this.showToast(message, 'error');
+    }
+
+    showInputError(message) {
+        if (!this.repoInput || !this.inputError) return;
+        this.repoInput.classList.add('invalid');
+        this.repoInput.setAttribute('aria-invalid', 'true');
+        this.inputError.textContent = message;
+        this.inputError.classList.add('visible');
+    }
+
+    clearInputError() {
+        if (!this.repoInput || !this.inputError) return;
+        this.repoInput.classList.remove('invalid');
+        this.repoInput.removeAttribute('aria-invalid');
+        this.inputError.textContent = '';
+        this.inputError.classList.remove('visible');
     }
 
     showToast(message, type = 'info') {
