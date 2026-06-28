@@ -3,78 +3,58 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>DevPilot - AI GitHub Repository Analyzer</title>
-    <link rel="stylesheet" href="/static/css/style.css">
-    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700;800&display=swap" rel="stylesheet">
+    <title>DevPilot — Premium Repository Intelligence</title>
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700;800;900&display=swap" rel="stylesheet">
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+    <link rel="stylesheet" href="/static/css/style.css">
 </head>
 <body>
+    <div class="page-ambient" aria-hidden="true"></div>
+
     <!-- Loading Screen -->
     <div id="loading-screen" class="loading-screen hidden">
         <div class="loading-content">
-            <div class="loading-logo">
-                <div class="logo-circle">
-                    <i class="fas fa-rocket"></i>
-                </div>
+            <div class="loading-logo" aria-hidden="true">
+                <div class="logo-circle"><i class="fas fa-rocket"></i></div>
                 <div class="logo-ring ring-1"></div>
                 <div class="logo-ring ring-2"></div>
                 <div class="logo-ring ring-3"></div>
             </div>
+            <span class="section-kicker"><i class="fas fa-wand-magic-sparkles"></i> Repository intelligence engine</span>
             <h2 class="loading-title">Analyzing Repository</h2>
             <p class="loading-subtitle" id="loading-status">Initializing scanner...</p>
             <div class="loading-telemetry" aria-live="polite">
                 <span id="loading-eta"><i class="fas fa-stopwatch"></i> Calibrating ETA</span>
                 <span id="loading-elapsed"><i class="fas fa-clock"></i> Elapsed 0s</span>
             </div>
-            
             <div class="progress-container">
-                <div class="progress-bar">
-                    <div class="progress-fill" id="progress-fill"></div>
-                </div>
+                <div class="progress-bar"><div class="progress-fill" id="progress-fill"></div></div>
                 <div class="progress-percentage" id="progress-percentage">0%</div>
             </div>
-            
             <div class="loading-steps">
-                <div class="step" id="step-1">
-                    <i class="fas fa-folder-open"></i>
-                    <span>Scanning files</span>
-                </div>
-                <div class="step" id="step-2">
-                    <i class="fas fa-code"></i>
-                    <span>Analyzing code</span>
-                </div>
-                <div class="step" id="step-3">
-                    <i class="fas fa-book"></i>
-                    <span>Checking docs</span>
-                </div>
-                <div class="step" id="step-4">
-                    <i class="fas fa-shield-alt"></i>
-                    <span>Security scan</span>
-                </div>
-                <div class="step" id="step-5">
-                    <i class="fas fa-vial"></i>
-                    <span>Testing analysis</span>
-                </div>
+                <div class="step" id="step-1"><i class="fas fa-folder-open"></i><span>Scanning files</span></div>
+                <div class="step" id="step-2"><i class="fas fa-code"></i><span>Analyzing code</span></div>
+                <div class="step" id="step-3"><i class="fas fa-book"></i><span>Checking docs</span></div>
+                <div class="step" id="step-4"><i class="fas fa-shield-alt"></i><span>Security scan</span></div>
+                <div class="step" id="step-5"><i class="fas fa-vial"></i><span>Testing analysis</span></div>
             </div>
             <div class="loading-events" id="loading-events" aria-live="polite"></div>
         </div>
     </div>
 
-    <!-- Main App -->
     <div id="app" class="app">
-        <!-- Header -->
         <header class="header">
             <div class="header-content">
                 <div class="logo-section">
-                    <div class="logo-icon">
-                        <i class="fas fa-rocket"></i>
-                    </div>
+                    <div class="logo-icon"><i class="fas fa-rocket"></i></div>
                     <div class="logo-text">
                         <h1>DevPilot</h1>
-                        <p>AI GitHub Repository Analyzer</p>
+                        <p>Repository Intelligence</p>
                     </div>
                 </div>
-                <nav class="header-nav">
+                <nav class="header-nav" aria-label="Primary navigation">
                     <a href="#" class="nav-link active" id="dashboard-nav"><i class="fas fa-home"></i> Dashboard</a>
                     <a href="#" class="nav-link" id="history-nav"><i class="fas fa-history"></i> History</a>
                     <a href="#" class="nav-link" id="about-nav"><i class="fas fa-circle-info"></i> About</a>
@@ -82,95 +62,82 @@
             </div>
         </header>
 
-        <!-- Hero Section -->
+        <!-- Premium scroll-driven landing page -->
         <section class="hero" id="hero-section">
-            <div class="hero-content">
-                <h2 class="hero-title">
-                    Analyze Your Repository
-                    <span class="highlight">Like a Pro</span>
-                </h2>
-                <p class="hero-subtitle">
-                    Get comprehensive insights about code quality, documentation, security, 
-                    testing, and more. Make your GitHub profile stand out.
-                </p>
-                
-                <div class="input-section">
-                    <div class="input-tabs">
-                        <button class="tab-btn active" data-tab="github">
-                            <i class="fab fa-github"></i>
-                            GitHub URL
-                        </button>
-                        <button class="tab-btn" data-tab="local">
-                            <i class="fas fa-folder"></i>
-                            Local Path
-                        </button>
-                    </div>
-                    
-                    <div class="input-wrapper">
-                        <input 
-                            type="text" 
-                            id="repo-input" 
-                            class="repo-input"
-                            placeholder="https://github.com/username/repository"
-                            autocomplete="off"
-                        >
-                        <button id="analyze-btn" class="analyze-btn">
-                            <span class="btn-text">Analyze Repository</span>
-                            <i class="fas fa-arrow-right"></i>
-                        </button>
-                    </div>
-                    
-                    <div class="quick-links">
-                        <span>Try example:</span>
-                        <button class="example-btn" data-url="https://github.com/python/cpython">
-                            <i class="fab fa-python"></i> CPython
-                        </button>
-                        <button class="example-btn" data-url="https://github.com/requests/requests">
-                            <i class="fas fa-cloud"></i> Requests
-                        </button>
+            <div class="hero-shell">
+                <div class="hero-copy reveal-on-scroll">
+                    <div class="hero-badge"><i class="fas fa-wand-magic-sparkles"></i> Light-speed audits for serious builders</div>
+                    <h2 class="hero-title">Turn any repository into a <span class="highlight">boardroom-ready</span> engineering report.</h2>
+                    <p class="hero-subtitle">DevPilot scans code quality, docs, tests, security, dependencies, language health, and roadmap signals — then shapes them into a polished, exportable dashboard.</p>
+                    <div class="hero-metrics" aria-label="DevPilot highlights">
+                        <span><strong>20+</strong> Languages</span>
+                        <span><strong>Live</strong> ETA</span>
+                        <span><strong>3</strong> Exports</span>
                     </div>
                 </div>
-                
-                <div class="features-grid">
-                    <div class="feature-card">
-                        <div class="feature-icon">
-                            <i class="fas fa-code"></i>
-                        </div>
-                        <h3>Code Quality</h3>
-                        <p>Analyze functions, imports, docstrings, and type hints</p>
-                    </div>
-                    <div class="feature-card">
-                        <div class="feature-icon">
-                            <i class="fas fa-book-open"></i>
-                        </div>
-                        <h3>Documentation</h3>
-                        <p>Check README completeness and project structure</p>
-                    </div>
-                    <div class="feature-card">
-                        <div class="feature-icon">
-                            <i class="fas fa-shield-alt"></i>
-                        </div>
-                        <h3>Security Scan</h3>
-                        <p>Detect hardcoded secrets and dangerous patterns</p>
-                    </div>
-                    <div class="feature-card">
-                        <div class="feature-icon">
-                            <i class="fas fa-vial"></i>
-                        </div>
-                        <h3>Testing</h3>
-                        <p>Evaluate test coverage and testing practices</p>
+
+                <div class="hero-visual reveal-on-scroll" aria-hidden="true">
+                    <div class="orbital-card card-a"><i class="fas fa-shield-halved"></i><span>Security</span></div>
+                    <div class="orbital-card card-b"><i class="fas fa-code-branch"></i><span>Quality</span></div>
+                    <div class="glossy-object">
+                        <div class="object-core"></div>
+                        <div class="object-ring ring-alpha"></div>
+                        <div class="object-ring ring-beta"></div>
+                        <div class="object-ring ring-gamma"></div>
+                        <div class="object-spark s1"></div>
+                        <div class="object-spark s2"></div>
+                        <div class="object-spark s3"></div>
                     </div>
                 </div>
+            </div>
+
+            <div class="input-section reveal-on-scroll">
+                <div class="input-head">
+                    <span class="section-kicker"><i class="fas fa-terminal"></i> Start audit</span>
+                    <p>Paste a public GitHub repository or choose a local project folder.</p>
+                </div>
+                <div class="input-tabs">
+                    <button class="tab-btn active" data-tab="github"><i class="fab fa-github"></i> GitHub URL</button>
+                    <button class="tab-btn" data-tab="local"><i class="fas fa-folder"></i> Local Path</button>
+                </div>
+                <div class="input-wrapper">
+                    <input type="text" id="repo-input" class="repo-input" placeholder="https://github.com/username/repository" autocomplete="off" aria-describedby="input-error input-helper">
+                    <button id="analyze-btn" class="analyze-btn"><span class="btn-text">Analyze Repository</span><i class="fas fa-arrow-right"></i></button>
+                </div>
+                <p id="input-error" class="input-error" role="alert" aria-live="polite"></p>
+                <p id="input-helper" class="input-helper"><i class="fas fa-shield-halved"></i> Public GitHub repositories and existing local folders only.</p>
+                <div class="quick-links">
+                    <span>Try verified examples:</span>
+                    <button class="example-btn" data-url="https://github.com/rui314/8cc" title="Small public C repository"><i class="fas fa-c"></i> C</button>
+                    <button class="example-btn" data-url="https://github.com/pallets/click" title="Public Python repository"><i class="fab fa-python"></i> Python</button>
+                    <button class="example-btn" data-url="https://github.com/psf/requests" title="Public Python HTTP library"><i class="fas fa-cloud"></i> Requests</button>
+                </div>
+            </div>
+
+            <div class="scroll-story" aria-label="Audit capabilities">
+                <article class="story-panel reveal-on-scroll">
+                    <span>01</span><h3>Scan architecture</h3><p>Map files, languages, structure, and dependency signals into a clean intelligence layer.</p>
+                </article>
+                <article class="story-panel reveal-on-scroll">
+                    <span>02</span><h3>Score risk</h3><p>Highlight quality gaps, security patterns, documentation readiness, and testing maturity.</p>
+                </article>
+                <article class="story-panel reveal-on-scroll">
+                    <span>03</span><h3>Ship reports</h3><p>Export JSON, Markdown, or standalone HTML that feels premium enough for portfolios and clients.</p>
+                </article>
+            </div>
+
+            <div class="features-grid">
+                <div class="feature-card reveal-on-scroll"><div class="feature-icon"><i class="fas fa-code"></i></div><h3>Code Quality</h3><p>Analyze functions, imports, docstrings, type hints, complexity clues, and language-specific signals.</p></div>
+                <div class="feature-card reveal-on-scroll"><div class="feature-icon"><i class="fas fa-book-open"></i></div><h3>Documentation</h3><p>Check README completeness, structure, onboarding details, and repository presentation quality.</p></div>
+                <div class="feature-card reveal-on-scroll"><div class="feature-icon"><i class="fas fa-shield-alt"></i></div><h3>Security Scan</h3><p>Detect hardcoded secrets, risky patterns, and obvious hygiene issues before publishing.</p></div>
+                <div class="feature-card reveal-on-scroll"><div class="feature-icon"><i class="fas fa-vial"></i></div><h3>Testing</h3><p>Evaluate test file presence, framework signals, and readiness for dependable delivery.</p></div>
             </div>
         </section>
 
         <!-- Results Dashboard -->
         <section class="dashboard hidden" id="dashboard">
             <div class="dashboard-header">
-                <button class="back-btn" id="back-btn">
-                    <i class="fas fa-arrow-left"></i>
-                    Back to Search
-                </button>
+                <button class="back-btn" id="back-btn"><i class="fas fa-arrow-left"></i> Back to Search</button>
                 <div class="repo-info">
                     <h2 id="repo-name">Repository Name</h2>
                     <p id="repo-url-display">https://github.com/...</p>
@@ -181,266 +148,82 @@
                 </div>
                 <div class="action-buttons">
                     <div class="export-wrap">
-                        <button class="action-btn export-btn" aria-expanded="false" aria-controls="export-menu">
-                            <i class="fas fa-download"></i>
-                            Export Report
-                        </button>
+                        <button class="action-btn export-btn" aria-expanded="false" aria-controls="export-menu"><i class="fas fa-download"></i> Export Report</button>
                         <div class="export-menu hidden" id="export-menu">
                             <button data-export-format="html"><i class="fas fa-file-code"></i> Standalone HTML</button>
                             <button data-export-format="markdown"><i class="fab fa-markdown"></i> Markdown</button>
                             <button data-export-format="json"><i class="fas fa-file-code"></i> Raw JSON</button>
                         </div>
                     </div>
-                    <button class="action-btn share-btn">
-                        <i class="fas fa-share-alt"></i>
-                        Share
-                    </button>
+                    <button class="action-btn share-btn"><i class="fas fa-share-alt"></i> Share</button>
                 </div>
             </div>
 
-            <!-- Overall Score Card -->
             <div class="score-overview">
                 <div class="overall-score-card">
                     <div class="score-circle-container">
                         <svg class="score-circle" viewBox="0 0 120 120">
+                            <defs><linearGradient id="scoreGradient" x1="0" x2="1" y1="0" y2="1"><stop offset="0%" stop-color="#2dd4bf"/><stop offset="55%" stop-color="#3b82f6"/><stop offset="100%" stop-color="#8b5cf6"/></linearGradient></defs>
                             <circle class="score-bg" cx="60" cy="60" r="54"/>
-                            <circle class="score-progress" cx="60" cy="60" r="54" 
-                                    id="overall-score-circle"/>
+                            <circle class="score-progress" cx="60" cy="60" r="54" id="overall-score-circle"/>
                         </svg>
-                        <div class="score-center">
-                            <span class="score-value" id="overall-score">0</span>
-                            <span class="score-grade" id="overall-grade">--</span>
-                        </div>
+                        <div class="score-center"><span class="score-value" id="overall-score">0</span><span class="score-grade" id="overall-grade">--</span></div>
                     </div>
-                    <div class="score-info">
-                        <h3>Overall Score</h3>
-                        <p id="grade-description">Analysis results will appear here</p>
-                    </div>
+                    <div class="score-info"><h3>Overall Score</h3><p id="grade-description">Analysis results will appear here</p></div>
                 </div>
 
-                <!-- Score Breakdown Cards -->
                 <div class="breakdown-grid">
-                    <div class="breakdown-card" data-category="code-quality">
-                        <div class="card-header">
-                            <div class="card-icon">
-                                <i class="fas fa-code"></i>
-                            </div>
-                            <span class="card-label">Code Quality</span>
-                        </div>
-                        <div class="card-score">
-                            <span class="score-number" id="code-quality-score">--</span>
-                            <span class="score-max">/100</span>
-                        </div>
-                        <div class="card-bar">
-                            <div class="bar-fill" id="code-quality-bar"></div>
-                        </div>
-                    </div>
-
-                    <div class="breakdown-card" data-category="documentation">
-                        <div class="card-header">
-                            <div class="card-icon">
-                                <i class="fas fa-book"></i>
-                            </div>
-                            <span class="card-label">Documentation</span>
-                        </div>
-                        <div class="card-score">
-                            <span class="score-number" id="documentation-score">--</span>
-                            <span class="score-max">/100</span>
-                        </div>
-                        <div class="card-bar">
-                            <div class="bar-fill" id="documentation-bar"></div>
-                        </div>
-                    </div>
-
-                    <div class="breakdown-card" data-category="testing">
-                        <div class="card-header">
-                            <div class="card-icon">
-                                <i class="fas fa-vial"></i>
-                            </div>
-                            <span class="card-label">Testing</span>
-                        </div>
-                        <div class="card-score">
-                            <span class="score-number" id="testing-score">--</span>
-                            <span class="score-max">/100</span>
-                        </div>
-                        <div class="card-bar">
-                            <div class="bar-fill" id="testing-bar"></div>
-                        </div>
-                    </div>
-
-                    <div class="breakdown-card" data-category="security">
-                        <div class="card-header">
-                            <div class="card-icon">
-                                <i class="fas fa-shield-alt"></i>
-                            </div>
-                            <span class="card-label">Security</span>
-                        </div>
-                        <div class="card-score">
-                            <span class="score-number" id="security-score">--</span>
-                            <span class="score-max">/100</span>
-                        </div>
-                        <div class="card-bar">
-                            <div class="bar-fill" id="security-bar"></div>
-                        </div>
-                    </div>
-
-                    <div class="breakdown-card" data-category="dependencies">
-                        <div class="card-header">
-                            <div class="card-icon">
-                                <i class="fas fa-box"></i>
-                            </div>
-                            <span class="card-label">Dependencies</span>
-                        </div>
-                        <div class="card-score">
-                            <span class="score-number" id="dependencies-score">--</span>
-                            <span class="score-max">/100</span>
-                        </div>
-                        <div class="card-bar">
-                            <div class="bar-fill" id="dependencies-bar"></div>
-                        </div>
-                    </div>
-
-                    <div class="breakdown-card" data-category="structure">
-                        <div class="card-header">
-                            <div class="card-icon">
-                                <i class="fas fa-sitemap"></i>
-                            </div>
-                            <span class="card-label">Structure</span>
-                        </div>
-                        <div class="card-score">
-                            <span class="score-number" id="structure-score">--</span>
-                            <span class="score-max">/100</span>
-                        </div>
-                        <div class="card-bar">
-                            <div class="bar-fill" id="structure-bar"></div>
-                        </div>
-                    </div>
+                    <div class="breakdown-card" data-category="code-quality"><div class="card-header"><div class="card-icon"><i class="fas fa-code"></i></div><span class="card-label">Code Quality</span></div><div class="card-score"><span class="score-number" id="code-quality-score">--</span><span class="score-max">/100</span></div><div class="card-bar"><div class="bar-fill" id="code-quality-bar"></div></div></div>
+                    <div class="breakdown-card" data-category="documentation"><div class="card-header"><div class="card-icon"><i class="fas fa-book"></i></div><span class="card-label">Documentation</span></div><div class="card-score"><span class="score-number" id="documentation-score">--</span><span class="score-max">/100</span></div><div class="card-bar"><div class="bar-fill" id="documentation-bar"></div></div></div>
+                    <div class="breakdown-card" data-category="testing"><div class="card-header"><div class="card-icon"><i class="fas fa-vial"></i></div><span class="card-label">Testing</span></div><div class="card-score"><span class="score-number" id="testing-score">--</span><span class="score-max">/100</span></div><div class="card-bar"><div class="bar-fill" id="testing-bar"></div></div></div>
+                    <div class="breakdown-card" data-category="security"><div class="card-header"><div class="card-icon"><i class="fas fa-shield-alt"></i></div><span class="card-label">Security</span></div><div class="card-score"><span class="score-number" id="security-score">--</span><span class="score-max">/100</span></div><div class="card-bar"><div class="bar-fill" id="security-bar"></div></div></div>
+                    <div class="breakdown-card" data-category="dependencies"><div class="card-header"><div class="card-icon"><i class="fas fa-box"></i></div><span class="card-label">Dependencies</span></div><div class="card-score"><span class="score-number" id="dependencies-score">--</span><span class="score-max">/100</span></div><div class="card-bar"><div class="bar-fill" id="dependencies-bar"></div></div></div>
+                    <div class="breakdown-card" data-category="structure"><div class="card-header"><div class="card-icon"><i class="fas fa-sitemap"></i></div><span class="card-label">Structure</span></div><div class="card-score"><span class="score-number" id="structure-score">--</span><span class="score-max">/100</span></div><div class="card-bar"><div class="bar-fill" id="structure-bar"></div></div></div>
                 </div>
             </div>
 
-            <!-- Detailed Analysis Grid -->
             <div class="analysis-grid">
-                <!-- Stats Cards -->
-                <div class="stats-card">
-                    <h3><i class="fas fa-chart-bar"></i> Repository Stats</h3>
-                    <div class="stats-grid">
-                        <div class="stat-item">
-                            <span class="stat-value" id="total-files">0</span>
-                            <span class="stat-label">Total Files</span>
-                        </div>
-                        <div class="stat-item">
-                            <span class="stat-value" id="source-files">0</span>
-                            <span class="stat-label">Source Files</span>
-                        </div>
-                        <div class="stat-item">
-                            <span class="stat-value" id="test-files">0</span>
-                            <span class="stat-label">Test Files</span>
-                        </div>
-                        <div class="stat-item">
-                            <span class="stat-value" id="dependencies-count">0</span>
-                            <span class="stat-label">Dependencies</span>
-                        </div>
-                        <div class="stat-item">
-                            <span class="stat-value" id="language-count">0</span>
-                            <span class="stat-label">Languages</span>
-                        </div>
-                    </div>
-                </div>
-
-                <!-- Strong Points -->
-                <div class="info-card strong-points">
-                    <h3><i class="fas fa-check-circle"></i> Strong Points</h3>
-                    <ul id="strong-points-list" class="points-list">
-                        <li class="empty-state">No strong points identified yet</li>
-                    </ul>
-                </div>
-
-                <!-- Weak Points -->
-                <div class="info-card weak-points">
-                    <h3><i class="fas fa-exclamation-triangle"></i> Areas to Improve</h3>
-                    <ul id="weak-points-list" class="points-list">
-                        <li class="empty-state">No weaknesses identified</li>
-                    </ul>
-                </div>
+                <div class="stats-card"><h3><i class="fas fa-chart-bar"></i> Repository Stats</h3><div class="stats-grid"><div class="stat-item"><span class="stat-value" id="total-files">0</span><span class="stat-label">Total Files</span></div><div class="stat-item"><span class="stat-value" id="source-files">0</span><span class="stat-label">Source Files</span></div><div class="stat-item"><span class="stat-value" id="test-files">0</span><span class="stat-label">Test Files</span></div><div class="stat-item"><span class="stat-value" id="dependencies-count">0</span><span class="stat-label">Dependencies</span></div><div class="stat-item"><span class="stat-value" id="language-count">0</span><span class="stat-label">Languages</span></div></div></div>
+                <div class="info-card strong-points"><h3><i class="fas fa-check-circle"></i> Strong Points</h3><ul id="strong-points-list" class="points-list"><li class="empty-state">No strong points identified yet</li></ul></div>
+                <div class="info-card weak-points"><h3><i class="fas fa-exclamation-triangle"></i> Areas to Improve</h3><ul id="weak-points-list" class="points-list"><li class="empty-state">No weaknesses identified</li></ul></div>
             </div>
 
-            <!-- Cross-language health matrix -->
             <section class="language-health-section" id="language-health-section">
-                <div class="section-heading">
-                    <div>
-                        <span class="section-kicker"><i class="fas fa-layer-group"></i> Multi-language Intelligence</span>
-                        <h3>Language Health Matrix</h3>
-                        <p>Each detected language is audited with language-aware quality rules.</p>
-                    </div>
-                    <span class="matrix-count" id="language-matrix-count">0 LANGUAGES</span>
-                </div>
+                <div class="section-heading"><div><span class="section-kicker"><i class="fas fa-layer-group"></i> Multi-language Intelligence</span><h3>Language Health Matrix</h3><p>Each detected language is audited with language-aware quality rules.</p></div><span class="matrix-count" id="language-matrix-count">0 LANGUAGES</span></div>
                 <div class="language-health-grid" id="language-health-grid"></div>
                 <p class="matrix-empty hidden" id="language-matrix-empty">No supported production source files were found. DevPilot kept code quality as N/A instead of assigning an unfair zero.</p>
             </section>
 
-            <!-- Roadmap Section -->
-            <div class="roadmap-section">
-                <h3><i class="fas fa-map-signs"></i> Improvement Roadmap</h3>
-                <div class="roadmap-timeline" id="roadmap-timeline">
-                    <!-- Timeline items will be inserted here -->
-                </div>
-            </div>
+            <div class="roadmap-section"><h3><i class="fas fa-map-signs"></i> Improvement Roadmap</h3><div class="roadmap-timeline" id="roadmap-timeline"></div></div>
 
-            <!-- Issues Section -->
             <div class="issues-section">
                 <div class="issues-tabs">
-                    <button class="issue-tab active" data-issue-type="code">
-                        <i class="fas fa-code"></i>
-                        Code Issues
-                        <span class="badge" id="code-issues-badge">0</span>
-                    </button>
-                    <button class="issue-tab" data-issue-type="security">
-                        <i class="fas fa-shield-alt"></i>
-                        Security
-                        <span class="badge" id="security-issues-badge">0</span>
-                    </button>
-                    <button class="issue-tab" data-issue-type="recommendations">
-                        <i class="fas fa-lightbulb"></i>
-                        Recommendations
-                        <span class="badge" id="recommendations-badge">0</span>
-                    </button>
+                    <button class="issue-tab active" data-issue-type="code"><i class="fas fa-code"></i> Code Issues <span class="badge" id="code-issues-badge">0</span></button>
+                    <button class="issue-tab" data-issue-type="security"><i class="fas fa-shield-alt"></i> Security <span class="badge" id="security-issues-badge">0</span></button>
+                    <button class="issue-tab" data-issue-type="recommendations"><i class="fas fa-lightbulb"></i> Recommendations <span class="badge" id="recommendations-badge">0</span></button>
                 </div>
-                
                 <div class="issues-content">
-                    <div class="issues-panel active" id="code-issues-panel">
-                        <div id="code-issues-list" class="issues-list"></div>
-                    </div>
-                    <div class="issues-panel" id="security-issues-panel">
-                        <div id="security-issues-list" class="issues-list"></div>
-                    </div>
-                    <div class="issues-panel" id="recommendations-panel">
-                        <div id="recommendations-list" class="issues-list"></div>
-                    </div>
+                    <div class="issues-panel active" id="code-issues-panel"><div id="code-issues-list" class="issues-list"></div></div>
+                    <div class="issues-panel" id="security-issues-panel"><div id="security-issues-list" class="issues-list"></div></div>
+                    <div class="issues-panel" id="recommendations-panel"><div id="recommendations-list" class="issues-list"></div></div>
                 </div>
             </div>
         </section>
 
         <aside class="history-drawer hidden" id="history-drawer" aria-live="polite">
-            <div class="drawer-header">
-                <div><span class="section-kicker"><i class="fas fa-clock-rotate-left"></i> This browser session</span><h3>Recent Audits</h3></div>
-                <button class="drawer-close" id="history-close" aria-label="Close history"><i class="fas fa-xmark"></i></button>
-            </div>
+            <div class="drawer-header"><div><span class="section-kicker"><i class="fas fa-clock-rotate-left"></i> This browser session</span><h3>Recent Audits</h3></div><button class="drawer-close" id="history-close" aria-label="Close history"><i class="fas fa-xmark"></i></button></div>
             <div id="history-list" class="history-list"><p class="empty-state">No completed audit in this session yet.</p></div>
         </aside>
 
-        <!-- Footer -->
         <footer class="footer">
             <div class="footer-content">
-                <p>&copy; 2024 DevPilot. Built with ❤️ for developers.</p>
-                <div class="footer-links">
-                    <a href="#"><i class="fab fa-github"></i> GitHub</a>
-                    <a href="#"><i class="fas fa-file-alt"></i> Documentation</a>
-                    <a href="#"><i class="fas fa-envelope"></i> Contact</a>
-                </div>
+                <p>&copy; 2026 DevPilot. Premium repository intelligence for developers.</p>
+                <div class="footer-links"><a href="#"><i class="fab fa-github"></i> GitHub</a><a href="#"><i class="fas fa-file-alt"></i> Documentation</a><a href="#"><i class="fas fa-envelope"></i> Contact</a></div>
             </div>
         </footer>
     </div>
 
     <script src="/static/js/app.js"></script>
+<script defer src="https://static.cloudflareinsights.com/beacon.min.js/v833ccba57c9e4d2798f2e76cebdd09a11778172276447" integrity="sha512-57MDmcccJXYtNnH+ZiBwzC4jb2rvgVCEokYN+L/nLlmO8rfYT/gIpW2A569iJ/3b+0UEasghjuZH/ma3wIs/EQ==" data-cf-beacon='{"version":"2024.11.0","token":"1954b47c125f43f8b4338b3c4f804e4f","server_timing":{"name":{"cfCacheStatus":true,"cfEdge":true,"cfExtPri":true,"cfL4":true,"cfOrigin":true,"cfSpeedBrain":true},"location_startswith":null}}' crossorigin="anonymous"></script>
 </body>
 </html>
